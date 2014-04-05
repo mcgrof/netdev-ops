@@ -20,8 +20,14 @@ static struct net_device_ops my_netdev_ops = {
 static struct bubble_ops my_bubble_ops = {
 };
 
+static struct parent {
+	struct net_device *dev;
+	int b;
+};
+
 int main(void)
 {
+	struct parent *p = malloc(sizeof(struct parent));
 	struct net_device *dev = malloc(sizeof(struct net_device));
 	struct bubbles *bubble = malloc(sizeof(struct bubbles));
 
@@ -30,6 +36,9 @@ int main(void)
 
 	free(dev);
 	free(bubble);
+
+	p->dev = dev;
+	p->dev->netdev_ops = &my_netdev_ops;
 
 	return 0;
 }
