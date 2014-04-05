@@ -25,9 +25,15 @@ static struct parent {
 	int b;
 };
 
+static struct parent_usb {
+	struct net_device *net;
+	int b;
+};
+
 int main(void)
 {
 	struct parent *p = malloc(sizeof(struct parent));
+	struct parent_usb *p_usb = malloc(sizeof(struct parent));
 	struct net_device *dev = malloc(sizeof(struct net_device));
 	struct bubbles *bubble = malloc(sizeof(struct bubbles));
 
@@ -36,9 +42,12 @@ int main(void)
 
 	free(dev);
 	free(bubble);
+	free(p);
+	free(p_usb);
 
 	p->dev = dev;
 	p->dev->netdev_ops = &my_netdev_ops;
+	p_usb->net->netdev_ops = &my_netdev_ops;
 
 	return 0;
 }
